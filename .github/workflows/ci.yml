@@ -1,5 +1,5 @@
 # GitHub Action for Symfony
-name: Testing Symfony
+name: CI
 on: [push, pull_request]
 jobs:
   test:
@@ -34,6 +34,7 @@ jobs:
         run: |
           composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Run Lint
+        if: matrix.operating-system != 'windows-latest'
         run: composer lint
       - name: Run Static check
         run: composer static-check
