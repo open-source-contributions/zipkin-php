@@ -24,12 +24,16 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: xdebug #optional
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
       - name: Install Composer dependencies
         if: matrix.php-versions == '8.0'
-        env:
-          ignore_platform: --ignore-platform-req
         run: |
-          composer install --no-progress --prefer-dist --optimize-autoloader {{ env.ignore_platform }}
+          composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-req
+        if: matrix.php-versions != '8.0'
+        run: |
+          composer install --no-progress --prefer-dist --optimize-autoloader
       - name: Download php-coveralls.phar
         if: matrix.operating-system == 'ubuntu-latest'
         run: |
