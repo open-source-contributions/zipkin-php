@@ -34,8 +34,11 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
       - name: Install Composer dependencies
+        if: matrix.php-versions == '8.0'
+        env:
+          ignore_platform: --ignore-platform-req
         run: |
-          composer install --no-progress --prefer-dist --optimize-autoloader
+          composer install --no-progress --prefer-dist --optimize-autoloader {{ env.ignore_platform }}
       - name: Download php-coveralls.phar
         if: matrix.operating-system == 'ubuntu-latest'
         run: |
