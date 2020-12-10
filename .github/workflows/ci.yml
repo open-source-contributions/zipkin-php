@@ -30,7 +30,7 @@ jobs:
       - name: Install Composer dependencies for PHP 8.0
         if: matrix.php-versions == '8.0'
         run: |
-          composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-req
+          composer install --no-progress --prefer-dist --optimize-autoloader --ignore-platform-reqs
       - name: Install Composer dependencies for PHP 7.x
         if: matrix.php-versions != '8.0'
         run: |
